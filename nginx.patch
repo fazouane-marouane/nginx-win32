@@ -1,0 +1,26 @@
+From 4f0f1f309582b3992ec43c97768e98a66d893994 Mon Sep 17 00:00:00 2001
+From: fazouane-marouane <fazouanem3@gmail.com>
+Date: Sun, 4 Dec 2016 16:07:58 +0100
+Subject: [PATCH] Configure: Openssl on windows should use nasm
+
+Build of Openssl fails on windows when one is not using nasm. See https://github.com/openssl/openssl/issues/1545
+---
+ auto/lib/openssl/makefile.msvc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/auto/lib/openssl/makefile.msvc b/auto/lib/openssl/makefile.msvc
+index fc9e578..0d257ac 100644
+--- a/auto/lib/openssl/makefile.msvc
++++ b/auto/lib/openssl/makefile.msvc
+@@ -8,7 +8,7 @@ all:
+ 
+ 	perl Configure VC-WIN32 no-shared --prefix=openssl $(OPENSSL_OPT)
+ 
+-	ms\do_ms
++	ms\do_nasm
+ 
+ 	$(MAKE) -f ms\nt.mak
+ 	$(MAKE) -f ms\nt.mak install
+-- 
+2.8.1.windows.1
+
