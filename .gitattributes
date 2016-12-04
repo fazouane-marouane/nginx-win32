@@ -1,0 +1,9 @@
+# Source files
+.gitattributes text eol=crlf
+.gitignore text eol=crlf
+*.ps1 text eol=crlf
+*.psm1 text eol=crlf
+*.patch text eol=crlf
+# Binaries
+*.zip binary
+*.tar.gz binary
