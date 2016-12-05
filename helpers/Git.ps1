@@ -16,7 +16,10 @@ function Clone-Repository {
             $script:RepoNameMatcher = ([regex]"([^/]*)\.git$").Match($RepoUri)
             $Name = $script:RepoNameMatcher.Groups[1].Value
         }
-        git @("clone", $RepoUri, $Name)
+        & "git" @("clone", $RepoUri, $Name) 2> $null
+        if ($LASTEXITCODE) {
+            Write-Error "Cloning: failed"
+        }
         Pop-Location
         $script:RepoDestination = Resolve-Path (Join-Path -Path $Destination -ChildPath $Name)
         $script:RepoDestination
@@ -35,7 +38,10 @@ function Checkout-Tag {
     process{
         Push-Location $RepoPath
         $script:Args = @("checkout", "tags/$TagName")
-        git $script:Args
+        & "git" $script:Args 2> $null
+        if ($LASTEXITCODE) {
+            Write-Error "Checking out tag: failed"
+        }
         Pop-Location
         $RepoPath
     }
@@ -53,7 +59,10 @@ function Apply-Patch {
     process{
         Push-Location $RepoPath
         $script:Args = @("apply", $PatchLocation)
-        git $script:Args
+        & "git" $script:Args 2> $null
+        if ($LASTEXITCODE) {
+            Write-Error "Applying patch: failed"
+        }
         Pop-Location
         $RepoPath
     }

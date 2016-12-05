@@ -1,6 +1,20 @@
 Push-Location $PSScriptRoot
+
+# Helper function to extract vars out of the vsvars batch file
+function Get-Batchfile ($file) {
+    $cmd = "`"$file`" & set"
+    cmd /c $cmd | Foreach-Object {
+        $p, $v = $_.split('=')
+        Set-Item -path env:$p -value $v
+    }
+}
+
 try {
 Import-Module ./helpers -Global
+
+#Set environment variables for Visual Studio Command Prompt
+$vsvarspath = Join-Path $env:VS120COMNTOOLS vsvars32.bat
+Get-BatchFile($vsvarspath)
 
 # I. Clone Nginx
 Remove-Item -Path (Get-Local "nginx") -Force -Recurse -ErrorAction SilentlyContinue
@@ -32,6 +46,13 @@ foreach($item in @( (Get-Local "nasm"), (Combine-Paths -PathParts @("nasm", "rdo
         $env:Path = "$item;$env:Path"
     }
 }
+$local:GitPaths = ($env:Path.Split(";") | Where-Object { $_.Contains("Git") }) -join ";"
+$env:Path = ($env:Path.Split(";") | Where-Object { -Not ($_.Contains("Git")) }) -join ";"
+foreach($item in @( "C:\MinGW\msys\1.0\bin", "C:\MinGW\bin", $local:GitPaths )){
+    if(-Not ($env:Path.Split(";") -contains $item)){
+        $env:Path = "$env:Path;$item"
+    }
+}
 }
 finally {
 Pop-Location
@@ -39,8 +60,14 @@ Pop-Location
 # III. Configure & build nginx
 Push-Location (Get-Local "nginx")
 try{
-    & "C:\MinGW\msys\1.0\bin\bash.exe" "config.sh"
-    nmake
+    & "C:\MinGW\msys\1.0\bin\bash.exe" "config.sh" 2> $null
+    if ($LASTEXITCODE) {
+        Write-Error "config: failed"
+    }
+    & "nmake" 2> $null
+    if ($LASTEXITCODE) {
+        Write-Error "nmake: failed"
+    }
 }
 finally {
 Pop-Location

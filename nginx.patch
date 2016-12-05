@@ -1,15 +1,32 @@
-From 47bd82a1521fd2437366e42494f52a51dcaad464 Mon Sep 17 00:00:00 2001
+From b068b48e55369f130b75260be3f8f7a53f1de292 Mon Sep 17 00:00:00 2001
 From: fazouane-marouane <fazouanem3@gmail.com>
-Date: Mon, 5 Dec 2016 02:01:46 +0100
+Date: Mon, 5 Dec 2016 21:08:44 +0100
 Subject: [PATCH] Configure: Openssl on windows should use nasm
 
 Build of Openssl fails on windows when one is not using nasm. See https://github.com/openssl/openssl/issues/1545
 ---
+ auto/configure                 |  5 +++++
  auto/lib/openssl/makefile.msvc |  2 +-
  config.sh                      | 30 ++++++++++++++++++++++++++++++
- 2 files changed, 31 insertions(+), 1 deletion(-)
+ 3 files changed, 36 insertions(+), 1 deletion(-)
  create mode 100644 config.sh
 
+diff --git a/auto/configure b/auto/configure
+index ceff15e..bbe14d1 100755
+--- a/auto/configure
++++ b/auto/configure
+@@ -40,6 +40,11 @@ if test -z "$NGX_PLATFORM"; then
+             NGX_PLATFORM=win32
+         ;;
+     esac
++    case "$NGX_SYSTEM" in
++        MSYS_*)
++            NGX_PLATFORM=win32
++        ;;
++    esac
+ 
+ else
+     echo "building for $NGX_PLATFORM"
 diff --git a/auto/lib/openssl/makefile.msvc b/auto/lib/openssl/makefile.msvc
 index fc9e578..00c9106 100644
 --- a/auto/lib/openssl/makefile.msvc
