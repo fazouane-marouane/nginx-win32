@@ -44,6 +44,9 @@ test: off
 #      artifacts configuration    #
 #---------------------------------#
 
+artifacts:
+  - path: '**\nginx.exe'
+
 deploy:
   release: nginx-v$(appveyor_build_version)
   description: 'Release description'
@@ -54,5 +57,4 @@ deploy:
   draft: false
   prerelease: false
   on:
-    branch: master
     appveyor_repo_tag: true 
