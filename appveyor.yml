@@ -48,7 +48,7 @@ artifacts:
   - path: '**\nginx.exe'
 
 deploy:
-  release: nginx-v$(appveyor_build_version)
+  release: $(appveyor_repo_tag_name)
   description: 'Release description'
   provider: GitHub
   auth_token:
