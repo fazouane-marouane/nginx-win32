@@ -36,6 +36,15 @@ foreach($item in @( (Get-Local "nasm"), (Combine-Paths -PathParts @("nasm", "rdo
 finally {
 Pop-Location
 }
+# III. Configure & build nginx
+Push-Location (Get-Local "nginx")
+try{
+    & "C:\MinGW\msys\1.0\bin\bash.exe" "config.sh"
+    nmake
+}
+finally {
+Pop-Location
+}
 }
 finally {
 Pop-Location

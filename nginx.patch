@@ -1,15 +1,17 @@
-From 4f0f1f309582b3992ec43c97768e98a66d893994 Mon Sep 17 00:00:00 2001
+From 47bd82a1521fd2437366e42494f52a51dcaad464 Mon Sep 17 00:00:00 2001
 From: fazouane-marouane <fazouanem3@gmail.com>
-Date: Sun, 4 Dec 2016 16:07:58 +0100
+Date: Mon, 5 Dec 2016 02:01:46 +0100
 Subject: [PATCH] Configure: Openssl on windows should use nasm
 
 Build of Openssl fails on windows when one is not using nasm. See https://github.com/openssl/openssl/issues/1545
 ---
- auto/lib/openssl/makefile.msvc | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ auto/lib/openssl/makefile.msvc |  2 +-
+ config.sh                      | 30 ++++++++++++++++++++++++++++++
+ 2 files changed, 31 insertions(+), 1 deletion(-)
+ create mode 100644 config.sh
 
 diff --git a/auto/lib/openssl/makefile.msvc b/auto/lib/openssl/makefile.msvc
-index fc9e578..0d257ac 100644
+index fc9e578..00c9106 100644
 --- a/auto/lib/openssl/makefile.msvc
 +++ b/auto/lib/openssl/makefile.msvc
 @@ -8,7 +8,7 @@ all:
@@ -21,6 +23,42 @@ index fc9e578..0d257ac 100644
  
  	$(MAKE) -f ms\nt.mak
  	$(MAKE) -f ms\nt.mak install
+diff --git a/config.sh b/config.sh
+new file mode 100644
+index 0000000..86319b0
+--- /dev/null
++++ b/config.sh
+@@ -0,0 +1,30 @@
++./auto/configure --with-cc=cl --builddir=objs --prefix= \
++--conf-path=conf/nginx.conf --pid-path=logs/nginx.pid \
++--http-log-path=logs/access.log --error-log-path=logs/error.log \
++--sbin-path=nginx.exe --http-client-body-temp-path=temp/client_body_temp \
++--http-proxy-temp-path=temp/proxy_temp \
++--http-fastcgi-temp-path=temp/fastcgi_temp \
++--with-cc-opt=-DFD_SETSIZE=1024 --with-pcre=objs/lib/pcre \
++--with-zlib=objs/lib/zlib --with-openssl=objs/lib/openssl \
++--with-select_module \
++--with-http_ssl_module \
++--with-http_realip_module \
++--with-http_addition_module \
++--with-http_sub_module \
++--with-http_dav_module \
++--with-http_flv_module \
++--with-http_mp4_module \
++--with-http_gunzip_module \
++--with-http_gzip_static_module \
++--with-http_random_index_module \
++--with-http_secure_link_module \
++--with-http_stub_status_module \
++--with-http_auth_request_module \
++--with-stream \
++--with-stream_ssl_module \
++--with-http_slice_module \
++--with-mail \
++--with-mail_ssl_module \
++--with-file-aio \
++--with-http_v2_module \
++--with-ipv6
 -- 
 2.8.1.windows.1
 
