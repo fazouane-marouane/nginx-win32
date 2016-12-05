@@ -30,7 +30,7 @@ Push-Location $Local:dependenciesLocation
 try{
 $local:dependencies=@(
     [Uri]"https://github.com/openssl/openssl/archive/OpenSSL_1_0_2j.zip",
-    [Uri]"ftp://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.39.zip",
+    [Uri]"https://ftp.csx.cam.ac.uk/pub/software/programming/pcre/pcre-8.39.zip",
     [Uri]"http://zlib.net/zlib128.zip",
     [Uri]"http://www.nasm.us/pub/nasm/releasebuilds/2.12.02/win32/nasm-2.12.02-win32.zip"
 ) | ForEach-Object { [PSCustomObject]@{ Uri=$_; File=(Get-Local -Name ($_.Segments[-1]))} }
