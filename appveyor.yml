@@ -18,10 +18,14 @@ os: Visual Studio 2015
 environment:
   Configuration: Release
   matrix:
-  - TARGET: i686-pc-windows-msvc
-    ARCH: x86
-    WIN_SDK_VERSION: v7.0
-    VS: C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\vcvarsall.bat
+  - TARGET: msvc-2015
+    VS: 2015
+  - TARGET: msvc-2013
+    VS: 2013
+  - TARGET: msvc-2010
+    VS: 2010
+  - TARGET: msvc-2008
+    VS: 2008
 
 #---------------------------------#
 #       build configuration       #
@@ -31,7 +35,6 @@ platform: x86
 
 build: off
 build_script:
-  - "where bash"
   - ps: .\build.ps1
 
 #---------------------------------#
