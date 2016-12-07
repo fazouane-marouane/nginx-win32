@@ -12,7 +12,8 @@ skip_tags: false
 #---------------------------------#
 #    environment configuration    #
 #---------------------------------#
-image: Visual Studio 2017 RC
+image: Visual Studio 2015
+os: Visual Studio 2015
 
 environment:
   Configuration: Release
