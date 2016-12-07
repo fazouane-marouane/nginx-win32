@@ -12,12 +12,14 @@ skip_tags: false
 #---------------------------------#
 #    environment configuration    #
 #---------------------------------#
-image: Visual Studio 2015
-os: Visual Studio 2015
+image: Visual Studio 2017 RC
+os: Visual Studio 2017 RC
 
 environment:
   Configuration: Release
   matrix:
+  - TARGET: msvc-2017
+    VS: 2017
   - TARGET: msvc-2015
     VS: 2015
   - TARGET: msvc-2013
