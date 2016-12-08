@@ -36,7 +36,7 @@ environment:
 platform: x86
 
 install:
-  - cinst pscx
+  - ps: install-module pscx
 
 build: off
 build_script:

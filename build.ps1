@@ -1,6 +1,7 @@
 Push-Location $PSScriptRoot
 try {
     Import-Module ./helpers
+    Import-Module pscx
 
     # I. Clone Nginx
     Remove-Item -Path (Get-Local "nginx") -Force -Recurse -ErrorAction SilentlyContinue
@@ -43,8 +44,6 @@ try {
         Import-VisualStudio -VS:($env:VS)
         Start-Bash (Resolve-Path (Get-Local "config.sh"))
         Start-Nmake
-        Import-Pscx
-        Import-Module pscx
         $Local:binPath = Get-Local "bin"
         Remove-Item -Path $Local:binPath -Force -Recurse -ErrorAction SilentlyContinue
         New-Item -Path:$Local:binPath -ItemType Directory -ErrorAction SilentlyContinue
@@ -58,6 +57,5 @@ try {
     }
 }
 finally {
-    Remove-Module ./helpers
     Pop-Location
 }
