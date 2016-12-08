@@ -35,6 +35,9 @@ environment:
 
 platform: x86
 
+install:
+  - cinst pscx
+
 build: off
 build_script:
   - ps: .\build.ps1
@@ -50,7 +53,7 @@ test: off
 #---------------------------------#
 
 artifacts:
-  - path: '**\nginx.exe'
+  - path: '**\nginx**.zip'
 
 deploy:
   release: $(appveyor_repo_tag_name)
@@ -58,7 +61,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: 7vPd3RxHe/SekGhE4AC5FSLBl9EdGigpz+CzEKLkikWkFo1axvgv5Iql4AR+4722
-  artifact: /.*\.nginx\.exe/
+  artifact: /.*\.nginx.*\.zip/
   draft: false
   prerelease: false
   on:

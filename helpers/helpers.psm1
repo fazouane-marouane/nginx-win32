@@ -16,5 +16,6 @@ Export-ModuleMember -Function @(
     'Checkout-Tag',
     'Apply-Patch',
     'Get-Local',
-    'Combine-Paths'
+    'Combine-Paths',
+    'Import-Pscx'
 )

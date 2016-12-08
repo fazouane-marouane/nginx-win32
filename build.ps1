@@ -43,6 +43,15 @@ try {
         Import-VisualStudio -VS:($env:VS)
         Start-Bash (Resolve-Path (Get-Local "config.sh"))
         Start-Nmake
+        Import-Pscx
+        Import-Module pscx
+        $Local:binPath = Get-Local "bin"
+        Remove-Item -Path $Local:binPath -Force -Recurse -ErrorAction SilentlyContinue
+        New-Item -Path:$Local:binPath -ItemType Directory -ErrorAction SilentlyContinue
+        Move-Item -Path:(Combine-Paths -PathParts @("objs", "nginx.exe")) -Destination:$Local:binPath
+        $Local:assetName = "nginx-$env:TARGET.zip"
+        Get-ChildItem -Recurse $Local:binPath |
+            Write-Zip -OutputPath:(Get-Local $Local:assetName) -IncludeEmptyDirectories -EntryPathRoot $Local:binPath
     }
     finally {
         Pop-Location
