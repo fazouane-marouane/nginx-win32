@@ -1,6 +1,6 @@
 Push-Location $PSScriptRoot
 try {
-    Import-Module ./helpers -Global
+    Import-Module ./helpers
 
     # I. Clone Nginx
     Remove-Item -Path (Get-Local "nginx") -Force -Recurse -ErrorAction SilentlyContinue
@@ -49,5 +49,6 @@ try {
     }
 }
 finally {
+    Remove-Module ./helpers
     Pop-Location
 }
