@@ -36,6 +36,7 @@ environment:
 platform: x86
 
 install:
+  - ps: Get-PackageProvider -Name NuGet -Force
   - ps: install-module pscx
 
 build: off
