@@ -37,6 +37,7 @@ platform: x86
 
 install:
   - ps: Get-PackageProvider -Name NuGet -Force
+  - ps: Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
   - ps: install-module pscx
 
 build: off
