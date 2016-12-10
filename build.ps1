@@ -23,7 +23,7 @@ try {
         ) | ForEach-Object { [PSCustomObject]@{ Uri=$_; File=(Get-Local -Name ($_.Segments[-1]))} }
         # Download dependencies & Unzip them
         $local:dependencies | ForEach-Object { (New-Object Net.WebClient).DownloadFile($_.Uri, $_.File) }
-        $local:dependencies | ForEach-Object { Expand-Archive -Path:$_.File -DestinationPath:(Get-Location) }
+        $local:dependencies | ForEach-Object { Expand-Archive -Path:$_.File -OutputPath:(Get-Location) }
         Rename-Item -Path:(Get-Local -Name:"openssl-OpenSSL_1_0_2j") "openssl"
         Rename-Item -Path:(Get-Local -Name:"pcre-8.39") "pcre"
         Rename-Item -Path:(Get-Local -Name:"zlib-1.2.8") "zlib"
