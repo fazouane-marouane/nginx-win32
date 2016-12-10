@@ -61,7 +61,7 @@ deploy:
   provider: GitHub
   auth_token:
     secure: 7vPd3RxHe/SekGhE4AC5FSLBl9EdGigpz+CzEKLkikWkFo1axvgv5Iql4AR+4722
-  artifact: /.*\.nginx.*\.zip/
+  artifact: /\/nginx.*\.zip$/
   draft: false
   prerelease: false
   on:
